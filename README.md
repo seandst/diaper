@@ -1,6 +1,7 @@
 Sometimes you just need to put a diaper on it.
 
-= wat? =
+wat?
+====
 
 The diaper pattern, in its natural form:
 ```python
@@ -25,10 +26,18 @@ with diaper:
 
 ```
 
-= seriously? =
+seriously?
+==========
 
 I guess that's up to you...
 
-= AUTHORS =
+AUTHORS
+=======
 Original implementation by Milan Falešník <mfalesni@redhat.com>
 Context manager support and module created by Sean Myers <semyers@redhat.com>
+
+BADGES
+======
+
+[![Build Status](https://travis-ci.org/seandst/diaper.svg?branch=master)](https://travis-ci.org/seandst/diaper)
+[![Coverage Status](https://coveralls.io/repos/seandst/diaper/badge.svg?branch=master)](https://coveralls.io/r/seandst/diaper?branch=master)
