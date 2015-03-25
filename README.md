@@ -38,9 +38,10 @@ http://diaper.rtfd.org/
 
 AUTHORS
 =======
-Original implementation by [Milan Falešník](https://github.com/mfalesni)
-Context manager support and module created by [Sean Myers](https://github.com/seandst)
-Diaper 'smell' concept courtesy of [Michael Hrivnak](https://github.com/mhrivnak)
+
+- Original implementation by [Milan Falešník](https://github.com/mfalesni)
+- Context manager support and module created by [Sean Myers](https://github.com/seandst)
+- Diaper 'smell' concept courtesy of [Michael Hrivnak](https://github.com/mhrivnak)
 
 BADGES
 ======
