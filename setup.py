@@ -2,15 +2,15 @@
 from setuptools import setup
 
 setup(
-    name = 'diaper',
-    version = '1.0',
-    description = 'Python Diaper',
-    author = 'Sean Myers',
-    author_email = 'semyers@redhat.com',
-    url = 'https://www.github.some/seandst/diaper/',
-    py_modules = ['diaper'],
-    license = 'WTFPL',
-    classifiers = [
+    name='diaper',
+    version='1.1',
+    description='Python Diaper',
+    author='Sean Myers',
+    author_email='semyers@redhat.com',
+    url='https://www.github.some/seandst/diaper/',
+    py_modules=['diaper'],
+    license='WTFPL',
+    classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
