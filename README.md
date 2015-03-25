@@ -31,6 +31,11 @@ seriously?
 
 I guess that's up to you...
 
+DOCS
+====
+
+http://diaper.rtfd.org/
+
 AUTHORS
 =======
 Original implementation by Milan Falešník <mfalesni@redhat.com>
@@ -41,3 +46,4 @@ BADGES
 
 [![Build Status](https://travis-ci.org/seandst/diaper.svg?branch=master)](https://travis-ci.org/seandst/diaper)
 [![Coverage Status](https://coveralls.io/repos/seandst/diaper/badge.svg?branch=master)](https://coveralls.io/r/seandst/diaper?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/diaper/badge/?version=latest)](https://readthedocs.org/projects/diaper/?badge=latest)
