@@ -34,6 +34,15 @@ Usage::
     diaper.change()
     assert not diaper.smelly
 
+    # diapers can be manipulated in the context with `as`
+    with diaper as nappy:
+        # But, of course, this serves no useful purpose
+        # Since you can just as easily manipulate diaper
+        assert nappy is diaper
+        if something_smells_funny:
+            nappy.soil()
+    assert diaper.smelly and nappy.smelly
+
 Note:
 
     diapers are thread-safe

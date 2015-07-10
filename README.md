@@ -24,6 +24,9 @@ diaper(do_something, arg1, arg2=True)
 with diaper:
     do_something(arg1, arg2=True)
 
+# what diaper invocation would be complete without a little silliness
+with diaper as nappy:
+    assert diaper is nappy, "...in some parts of the world"
 ```
 
 seriously?
