@@ -61,6 +61,8 @@ class Diaper(ModuleType):
     def __enter__(self):
         # Entering the context puts on a new diaper
         self.change()
+        # Return the diaper if (for whatever reason?) someone wants to use `with ... as`
+        return self
 
     def __exit__(self, exctype, excinst, exctb):
         if exctype is not None:

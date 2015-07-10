@@ -45,8 +45,9 @@ def test_diaper_callable(clean_diaper):
 
 def test_diaper_context_manager(clean_diaper):
     store = {}
-    with diaper:
+    with diaper as d:
         explode_and_report(store, 'arg', key='value')
+    assert d is diaper
     assert diaper.smelly
     assert 'arg' in store['args']
     assert store['kwargs'] == {'key': 'value'}
