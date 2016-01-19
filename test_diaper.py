@@ -84,5 +84,23 @@ def test_diaper_smell_cm(clean_diaper):
 
 
 def test_diaper_threadsafe(clean_diaper):
+    # diaper soiled in foreign thread is not smelly in main thread
     Thread(target=diaper, args=(explode,)).start()
     assert not diaper.smelly
+
+
+def test_diaper_foreign_thread_explosions(clean_diaper):
+    # use a mutable type to make it relatively easy to alter in a thread
+    diaper_smelliness_in_thread = []
+
+    # diaper soiled in foreign thread is not smelly in another foreign thread
+    def smelly_in_thread():
+        try:
+            diaper.smelly
+        except AttributeError:
+            diaper_smelliness_in_thread.append(True)
+
+    Thread(target=diaper, args=(explode,)).start()
+    Thread(target=smelly_in_thread).start()
+
+    assert not diaper_smelliness_in_thread, 'diaper in thread exploded on smelliness check'

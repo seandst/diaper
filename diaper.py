@@ -57,7 +57,7 @@ from types import ModuleType
 class Diaper(ModuleType):
     def __init__(self, *args, **kwargs):
         self._threadlocal = local()
-        self._threadlocal.smelly = False
+        self.change()
         super(Diaper, self).__init__(*args, **kwargs)
 
     def __call__(self, f, *args, **kwargs):
@@ -88,7 +88,16 @@ class Diaper(ModuleType):
         self.smelly = True
 
     def _get_smell(self):
-        return self._threadlocal.smelly
+        try:
+            return self._threadlocal.smelly
+        except AttributeError:
+            # smelly is initialized by the importing thread, so it's possible
+            # that a thread has access to the diaper but smelly hasn't been
+            # set in the threadlocal store. In that case, this thread's diaper
+            # is clean, since it hasn't yet been soiled or changed in the
+            # calling thread. "Initialize" the diaper and return.
+            self.change()
+            return self._threadlocal.smelly
 
     def _set_smell(self, smelliness):
         self._threadlocal.smelly = bool(smelliness)
