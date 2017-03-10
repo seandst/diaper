@@ -7,7 +7,7 @@ setup(
     description='Python Diaper',
     author='Sean Myers',
     author_email='semyers@redhat.com',
-    url='https://www.github.some/seandst/diaper/',
+    url='https://www.github.com/seandst/diaper/',
     py_modules=['diaper'],
     license='WTFPL',
     classifiers=[
