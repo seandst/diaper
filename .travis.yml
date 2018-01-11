@@ -5,6 +5,7 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
 install: pip install -r test_requirements.txt
 script: py.test --cov diaper test_diaper.py
 after_success:
