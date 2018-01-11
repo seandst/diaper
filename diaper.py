@@ -43,9 +43,20 @@ Usage::
             nappy.soil()
     assert diaper.smelly and nappy.smelly
 
+    # diapers can be inspected with redundant properties
+    assert diaper.clean == not diaper.smelly
+    assert diaper.dirty == diaper.smelly
+
+    # diaper can be used as a decorator
+    @diaper.wrap
+    def explode():
+        raise Exception
+    explode()
+    assert diaper.smelly
+
 Note:
 
-    diapers are thread-safe
+    diapers are probably thread-safe
 
 """
 
@@ -87,6 +98,19 @@ class Diaper(ModuleType):
         """Indicate that this diaper is dirty, and therefore smelly."""
         self.smelly = True
 
+    def wrap(self, f):
+        if getattr(f, '__diapered__', None):
+            return f
+        else:
+            from functools import wraps
+
+            # hilarity ensues
+            @wraps(f)
+            def wrapper(*args, **kwargs):
+                return self(f, *args, **kwargs)
+            wrapper.__diapered__ = True
+            return wrapper
+
     def _get_smell(self):
         try:
             return self._threadlocal.smelly
@@ -104,6 +128,15 @@ class Diaper(ModuleType):
 
     #: A smelly diaper is a dirty diaper
     smelly = property(_get_smell, _set_smell)
+
+    # handy properties based on the smelliness of this diaper
+    @property
+    def clean(self):
+        return not self.smelly
+
+    @property
+    def dirty(self):
+        return self.smelly
 
 # Well, the diaper pattern's already pretty shitty,
 # let's go ahead and just do some module impersonation

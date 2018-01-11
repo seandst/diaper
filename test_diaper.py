@@ -16,9 +16,11 @@ def clean_diaper():
 def dirty_diaper():
     diaper.soil()
 
+expection = RuntimeError("I exploded and you'll never find out about it!")
+
 
 def explode():
-    raise Exception("I exploded and you'll never find out about it!")
+    raise expection
 
 
 def explode_and_report(store, *args, **kwargs):
@@ -35,12 +37,42 @@ def test_diaper_methods(clean_diaper):
     assert not diaper.smelly
 
 
+def test_diaper_clean(clean_diaper):
+    assert diaper.clean
+    assert not diaper.dirty
+
+
+def test_diaper_dirty(dirty_diaper):
+    assert not diaper.clean
+    assert diaper.dirty
+
+
 def test_diaper_callable(clean_diaper):
     store = {}
     diaper(explode_and_report, store, 'arg', key='value')
     assert diaper.smelly
     assert 'arg' in store['args']
     assert store['kwargs'] == {'key': 'value'}
+
+
+def test_diaper_decorator(clean_diaper):
+    @diaper.wrap
+    def wrapme(*args, **kwargs):
+        "docstring"
+        # make sure arg passing works right
+        assert 'arg' in args
+        assert 'kwarg' in kwargs
+        assert kwargs['kwarg'] == 'value'
+        explode()
+
+    # no exception raised
+    wrapme('arg', kwarg='value')
+
+    # using @wraps in wrap wasn't pointless
+    assert wrapme.__doc__ == "docstring"
+
+    # call to wrapme dirtied the diaper
+    assert diaper.dirty
 
 
 def test_diaper_context_manager(clean_diaper):
@@ -56,19 +88,19 @@ def test_diaper_context_manager(clean_diaper):
 def test_change_diaper(dirty_diaper):
     # new diapers should be clean
     diaper.change()
-    assert not diaper.smelly
+    assert diaper.clean
 
 
 def test_diaper_autochange_func(dirty_diaper):
     # we should always start with a fresh diaper
     diaper(lambda: None)
-    assert not diaper.smelly
+    assert diaper.clean
 
 
 def test_diaper_autochange_cm(dirty_diaper):
     with diaper:
         pass
-    assert not diaper.smelly
+    assert diaper.clean
 
 
 def test_diaper_smell_func(clean_diaper):
@@ -86,7 +118,7 @@ def test_diaper_smell_cm(clean_diaper):
 def test_diaper_threadsafe(clean_diaper):
     # diaper soiled in foreign thread is not smelly in main thread
     Thread(target=diaper, args=(explode,)).start()
-    assert not diaper.smelly
+    assert diaper.clean
 
 
 def test_diaper_foreign_thread_explosions(clean_diaper):
